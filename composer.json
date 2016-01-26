@@ -15,7 +15,7 @@
             "email": "nikita.baray@gmail.com"
         }
     ],
-	"require": {
+    "require": {
         "illuminate/support": "~5.1",
         "bosnadev/repositories": "0.*",
     }
