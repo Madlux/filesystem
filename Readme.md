@@ -13,3 +13,9 @@
 ``` bash
 $ composer require madlux/filesystem
 ```
+
+Публикация vendor
+
+``` bash
+$ php artisan vendor:publish
+```
