@@ -21,15 +21,15 @@ class FilesController extends Controller
 	
 	public function indexAction()
 	{
+		$config=Config::get('madlux_files_settings');
+		
 		if (!Auth::check()){
-			return redirect('/auth/login');
+			return redirect($config['redirect_where_not_login']);
 		}
 		
 		$user = Auth::user();
 		
 		$files=Files::where('user_id','=',$user['id'])->get()->toArray();
-		
-		$config=Config::get('madlux_files_settings');
 		
 		return view('users::files_index',[
 			'user' => $user,

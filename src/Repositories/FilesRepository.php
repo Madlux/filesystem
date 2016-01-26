@@ -6,6 +6,6 @@ class FilesRepository extends Repository
 {
     public function model()
     {
-        return 'Packages\Users\Models\Files';
+        return 'Madlux\Filesystem\Models\Files';
     }
 }
