@@ -17,6 +17,6 @@
     ],
 	"require": {
         "illuminate/support": "~5.1",
-		"bosnadev/repositories": "0.*",
+        "bosnadev/repositories": "0.*",
     }
 }
