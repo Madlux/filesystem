@@ -1,5 +1,5 @@
 {
-    "name": "Madlux/filesystem",
+    "name": "madlux/filesystem",
     "type": "project",
     "description": "Laravel filesystem",
     "autoload": {
