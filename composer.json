@@ -1,0 +1,23 @@
+{
+    "name": "madlux/filesystem",
+    "license": "MIT",
+    "type": "project",
+    "description": "Laravel filesystem",
+    "autoload": {
+        "psr-4": { "Madlux\\Filesystem\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Madlux\\Filesystem\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.6.16",
+		"illuminate/support": "~5.1",
+    },
+	"homepage": "https://github.com/madlux/filesystem",
+	 "authors": [
+        {
+            "name": "Nikita Baray",
+            "email": "nikita.baray@gmail.com"
+        }
+    ],
+}
