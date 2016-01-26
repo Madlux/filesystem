@@ -28,6 +28,10 @@ class FilesystemServiceProvider extends ServiceProvider
 			__DIR__.'/config/madlux_files_settings.php' => config_path('madlux_files_settings.php'),
 		], 'config');
 		
+		$this->publishes([
+            __DIR__.'/migrations/' => database_path('migrations')
+        ], 'migrations');
+		
 		include __DIR__.'/config/routes.php';
 		/*
 		$this->publishes([
