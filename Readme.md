@@ -19,3 +19,9 @@ $ composer require madlux/filesystem
 ``` bash
 $ php artisan vendor:publish
 ```
+
+да
+
+``` bash
+$ php artisan migrate
+```
