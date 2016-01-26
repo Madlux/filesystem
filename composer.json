@@ -1,6 +1,5 @@
 {
-    "name": "madlux/filesystem",
-    "license": "MIT",
+    "name": "Madlux/filesystem",
     "type": "project",
     "description": "Laravel filesystem",
     "autoload": {
@@ -11,10 +10,10 @@
     },
     "require": {
         "php": ">=5.6.16",
-		"illuminate/support": "~5.1",
+        "illuminate/support": "~5.1",
     },
 	"homepage": "https://github.com/madlux/filesystem",
-	 "authors": [
+	"authors": [
         {
             "name": "Nikita Baray",
             "email": "nikita.baray@gmail.com"
