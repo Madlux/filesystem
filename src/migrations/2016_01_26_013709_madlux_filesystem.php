@@ -14,10 +14,10 @@ class MadluxFilesystem extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id');
-            $table->string('fileroot');
             $table->string('href');
             $table->string('filesize');
             $table->string('filename');
+			$table->string('type');
             $table->timestamps();
         });
 

@@ -7,9 +7,13 @@ use Config;
 
 class SaveFile extends MyCriteria 
 {
-	public function __construct($files)
+	public function __construct($files,$root)
     {
         $this->files = $files;
+		$this->root=$root;
+		if(!isset($this->root))
+			$this->root="";
+		$this->id_user=Auth::user()['id'];
     }
 
     /**
@@ -21,21 +25,22 @@ class SaveFile extends MyCriteria
     public function apply( $model, Repository $repository )
     {
 		if(isset($this->files)){
-			$id_user=Auth::user()['id'];
 			foreach($this->files as $key1 => $value1)
 				foreach($value1 as $key2 => $value2) 
 					$result[$key2][$key1] = $value2;
 			foreach($result as $file){
-				
-				$href=url('users/files/'.Auth::user()['username']);
 				
 				$dir_root=Config::get('madlux_files_settings.file_root').Auth::user()['username'];
 				$fileroot=$dir_root.'/'.$file['name'];
 				
 				$filenamedb=$file['name'];
 				
-				$id_file=$model->where('href','=',$href)
-					->where('file_name','=',$filenamedb)->get()->toArray();
+				$id_file=$model
+					->where('href','=',$this->root)
+					->where('file_name','=',$filenamedb)
+					->where('user_id','=',$this->id_user)
+					->where('type','=','file')
+					->get()->toArray();
 					
 				
 				if(!isset($id_file[0]['id'])){
@@ -49,11 +54,11 @@ class SaveFile extends MyCriteria
 					$date=date('U');
 					
 					$model->insert([
-						'href' => $href,
+						'href' => $this->root,
 						'file_name' => $filenamedb,
 						'filesize' => $filesize,
-						'user_id' => $id_user,
-						'fileroot' => $fileroot,
+						'user_id' => $this->id_user,
+						'type' => 'file',
 					]);
 					
 					$errors=false;

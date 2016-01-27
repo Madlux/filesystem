@@ -18,7 +18,7 @@ class FilesystemServiceProvider extends ServiceProvider
 	
 	public function boot()
 	{
-		$this->loadViewsFrom(__DIR__.'/views', 'users');
+		$this->loadViewsFrom(__DIR__.'/views', 'files');
 		
 		$this->publishes([
 			__DIR__.'/assets' => public_path('users'),
