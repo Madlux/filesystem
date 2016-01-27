@@ -33,7 +33,7 @@ class DeleteFileById extends MyCriteria {
 			
 		$filename = $model->get()->toArray();
 		
-		$fileroot=$this->dir_root.$this->root.$filename[0]['file_name'];
+		$fileroot=$this->dir_root.$this->root.$filename[0]['filename'];
 		
 		unlink($fileroot);
 		$model->delete();

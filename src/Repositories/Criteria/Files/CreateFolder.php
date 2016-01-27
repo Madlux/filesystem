@@ -26,7 +26,7 @@ class CreateFolder extends MyCriteria
     {
 		$folder = $model
 			->where('user_id','=',$this->id_user)
-			->where('file_name','=',$this->foldername)
+			->where('filename','=',$this->foldername)
 			->where('href','=',$this->root)
 			->where('type','=','folder')
 			->get()->toArray();
@@ -34,7 +34,7 @@ class CreateFolder extends MyCriteria
 		if(!isset($folder[0]['id'])){
 			$model->insert([
 				'user_id' => $this->id_user,
-				'file_name' => $this->foldername,
+				'filename' => $this->foldername,
 				'type' => 'folder',
 				'href' => $this->root,
 			]);

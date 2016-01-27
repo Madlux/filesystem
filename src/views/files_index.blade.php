@@ -28,10 +28,10 @@
 			<div class="col-md-5">
 				@foreach ($files as $file)
 					<div class='list_files col-md-12 vertical-alighn'>
-						<a  href="{{ url('files') }}?f={{ $file['file_name'] }}" 
+						<a  href="{{ url('files') }}?f={{ $file['filename'] }}" 
 							class="display-cell alert @if($file['type']!=='folder') alert-success @else alert-info @endif col-md-10" 
 							role="alert">
-							{{ $file['file_name'] }}
+							{{ $file['filename'] }}
 						</a>
 						@if($config['is_ajax'])
 							<button file="{{ $file['id'] }}" id='delete_file' 
@@ -57,8 +57,8 @@
 			<tbody>
 				@foreach ($files as $file)
 					<tr file="{{ $file['id'] }}">
-						<td>{{ $file['file_name'] }}</td>
-						<td>{{ $file['href'] }}/{{ $file['file_name'] }}</td>
+						<td>{{ $file['filename'] }}</td>
+						<td>{{ $file['href'] }}/{{ $file['filename'] }}</td>
 						<td>{{ $file['filesize'] }}</td>
 						@if($config['is_ajax'])
 							<td id='delete_file' style='cursor: pointer' class='btn btn-danger'>Удалить</td>

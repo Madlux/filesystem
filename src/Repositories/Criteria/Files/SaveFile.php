@@ -37,7 +37,7 @@ class SaveFile extends MyCriteria
 				
 				$id_file=$model
 					->where('href','=',$this->root)
-					->where('file_name','=',$filenamedb)
+					->where('filename','=',$filenamedb)
 					->where('user_id','=',$this->id_user)
 					->where('type','=','file')
 					->get()->toArray();
@@ -55,7 +55,7 @@ class SaveFile extends MyCriteria
 					
 					$model->insert([
 						'href' => $this->root,
-						'file_name' => $filenamedb,
+						'filename' => $filenamedb,
 						'filesize' => $filesize,
 						'user_id' => $this->id_user,
 						'type' => 'file',
