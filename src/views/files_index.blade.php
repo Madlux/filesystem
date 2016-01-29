@@ -159,6 +159,23 @@
 	
 		$(document).ready(function(){
 			@if($config['is_ajax'])
+				$('#files').on('fileuploaded','input[type=file]', function(event, data, previewId, index) {
+					var form = data.form, files = data.files, extra = data.extra,
+						response = data.response, reader = data.reader;
+					console.log(response);
+					$('#files .list_files .alert-info:last').parent().after(
+						'<div class="list_files col-md-12 vertical-alighn">'+
+							'<a  href="{{ url("files") }}?f={{ $folder.$slash }}'+response['0']['filename']+'"'+
+								'class="display-cell alert alert-success col-md-10"'+
+								'role="alert">'+
+								response['0']['filename']+
+							'</a>'+
+							'<button file="'+response['0']['id']+'" id="delete_file"'+
+										'class="btn btn-danger col-md-1 glyphicon glyphicon-remove"></button>'+
+						'</div>'
+					)
+				});
+			
 				$("#files").on('click','#delete_file',function(){
 					if(confirm("Удалить?")){
 						var obj=$(this);

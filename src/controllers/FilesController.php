@@ -77,6 +77,8 @@ class FilesController extends Controller
 		{
 			return redirect()->action('\Packages\Users\Controllers\FilesController@indexAction', ['errors' => $criteria->getError()]);
 		}
+		
+		return json_encode($criteria->files_responce);
 	}
 	
 	public function deleteFileAction(){

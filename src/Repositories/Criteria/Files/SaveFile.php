@@ -14,6 +14,7 @@ class SaveFile extends MyCriteria
 		if(!isset($this->root))
 			$this->root="";
 		$this->id_user=Auth::user()['id'];
+		$this->files_responce=array();
     }
 
     /**
@@ -53,7 +54,7 @@ class SaveFile extends MyCriteria
 					$filesize=filesize($file['tmp_name']);
 					$date=date('U');
 					
-					$model->insert([
+					$id=$model->insertGetId([
 						'href' => $this->root,
 						'filename' => $filenamedb,
 						'filesize' => $filesize,
@@ -61,7 +62,10 @@ class SaveFile extends MyCriteria
 						'type' => 'file',
 					]);
 					
-					$errors=false;
+					$this->files_responce[]=array(
+						'id' =>$id,
+						'filename' => $filenamedb,
+					);
 				}else{
 					$this->setError("Файл с названием $filenamedb уже существует");
 				}
