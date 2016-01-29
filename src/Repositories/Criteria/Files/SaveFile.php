@@ -31,7 +31,7 @@ class SaveFile extends MyCriteria
 			foreach($result as $file){
 				
 				$dir_root=Config::get('madlux_files_settings.file_root').Auth::user()['username'];
-				$fileroot=$dir_root.'/'.$file['name'];
+				$fileroot=$dir_root.'/'.$this->root.'/'.$file['name'];
 				
 				$filenamedb=$file['name'];
 				

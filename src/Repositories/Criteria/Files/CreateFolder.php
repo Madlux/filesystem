@@ -13,7 +13,9 @@ class CreateFolder extends MyCriteria
         $this->foldername = $foldername;
 		$this->root=$root;
 		if(!isset($this->root))
-			$this->root="";
+			$this->root='';
+		$this->dir_root = Config::get('madlux_files_settings.file_root').Auth::user()['username'];
+		$this->dir=$this->dir_root.'/'.$this->root.'/'.$this->foldername;
     }
 
     /**
@@ -32,15 +34,18 @@ class CreateFolder extends MyCriteria
 			->get()->toArray();
 		
 		if(!isset($folder[0]['id'])){
-			$model->insert([
-				'user_id' => $this->id_user,
-				'filename' => $this->foldername,
-				'type' => 'folder',
-				'href' => $this->root,
-			]);
+			$a=mkdir($this->dir);
+			if($a){
+				$model->insert([
+					'user_id' => $this->id_user,
+					'filename' => $this->foldername,
+					'type' => 'folder',
+					'href' => $this->root,
+				]);
+			}
 		}
 		
-		$this->setError($this->root);
+		$this->setError('');
 
         return $model;
     }

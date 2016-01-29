@@ -49,11 +49,20 @@ class FilesController extends Controller
 		//<--get folders
 		*/
 		
+		$pattern="/\/[a-zа-я_0-9]*$|[a-zа-я_0-9]*$/i";
+		
+		if($this->folder==='')
+			$slash='';
+		else
+			$slash='/';
+		
 		return view('files::files_index',[
 			'user' => $user,
 			'files' => $files,
 			'config' => $config,
 			'folder' => $this->folder,
+			'pattern' => $pattern,
+			'slash' => $slash,
 		]);
 	}
 	
@@ -89,7 +98,7 @@ class FilesController extends Controller
 			$criteria = new CreateFolder(Request::get('foldername'),$this->folder);
 			$model = $this->files->getByCriteria($criteria);
 			
-			return $this->folder;
+			return var_export($criteria->getError(), true);
 		}
 	}
 	

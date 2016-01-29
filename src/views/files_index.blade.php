@@ -26,9 +26,16 @@
 		<a class='btn btn-info col-md-2 glyphicon glyphicon-plus create_folder'>CREATE FOLDER</a>
 		<div class='col-md-12'>
 			<div class="col-md-5">
+				@if($folder!=="")
+					<div class='list_files col-md-12 vertical-alighn'>
+						<a  href="{{ url('files') }}?f={{ preg_replace($pattern,'',$folder) }}" 
+							class="display-cell alert alert-info col-md-10" 
+							role="alert">..</a>
+					</div>
+				@endif
 				@foreach ($files as $file)
 					<div class='list_files col-md-12 vertical-alighn'>
-						<a  href="{{ url('files') }}?f={{ $file['filename'] }}" 
+						<a  href="{{ url('files') }}?f={{ $folder.$slash.$file['filename'] }}" 
 							class="display-cell alert @if($file['type']!=='folder') alert-success @else alert-info @endif col-md-10" 
 							role="alert">
 							{{ $file['filename'] }}
@@ -153,7 +160,7 @@
 		$(document).ready(function(){
 			@if($config['is_ajax'])
 				$("#files").on('click','#delete_file',function(){
-					if(confirm("Удалить файл?")){
+					if(confirm("Удалить?")){
 						var obj=$(this);
 						var id=$(obj).attr('file')
 						$.ajax({
