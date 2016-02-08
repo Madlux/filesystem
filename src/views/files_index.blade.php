@@ -37,12 +37,15 @@
 					<div class='list_files col-md-12 vertical-alighn'>
 						<a  href="{{ url('files') }}?f={{ $folder.$slash.$file['filename'] }}" 
 							class="display-cell alert @if($file['type']!=='folder') alert-success @else alert-info @endif col-md-10" 
+							file="{{ $file['id'] }}"
 							role="alert">
 							{{ $file['filename'] }}
 						</a>
 						@if($config['is_ajax'])
+							<button file="{{ $file['id'] }}" id='update_name'
+									class='btn btn-warning col-md-1 glyphicon glyphicon-pencil'></button>
 							<button file="{{ $file['id'] }}" id='delete_file' 
-									class='btn btn-danger col-md-1 glyphicon glyphicon-remove'></button>
+									class='btn btn-danger col-md-1 glyphicon glyphicon-trash'></button>
 						@else
 							<button  type='submit' 
 								href="{{ url('files/delete') }}?id={{ $file['id'] }}"
@@ -52,35 +55,6 @@
 				@endforeach
 			</div>
 		</div>
-		<!--
-		<table class='table'>
-			<thead>
-				<tr>
-					<td>Имя файла</td>
-					<td>Ссылка на файл</td>
-					<td>Размер файла</td>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach ($files as $file)
-					<tr file="{{ $file['id'] }}">
-						<td>{{ $file['filename'] }}</td>
-						<td>{{ $file['href'] }}/{{ $file['filename'] }}</td>
-						<td>{{ $file['filesize'] }}</td>
-						@if($config['is_ajax'])
-							<td id='delete_file' style='cursor: pointer' class='btn btn-danger'>Удалить</td>
-						@else
-							<td id='delete_file' style='cursor: pointer'>
-								<a  type='submit' 
-									href="{{ url('users/files/delete') }}?id={{ $file['id'] }}"
-									class='btn btn-danger'>Удалить</a>
-							</td>
-						@endif
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
-		-->
 		<div class='shadow'></div>
 		<div class='conteiner'></div>
 	</div>
@@ -175,6 +149,52 @@
 						'</div>'
 					)
 				});
+				
+				$("#files").on('click','#update_name',function(){
+					var old_name=$(this).parent().find('a').html();
+					var file_id=$(this).attr('file')
+					
+					old_name=old_name.replace(/^\s+|\s+$/g,'');
+					
+					$('#files .shadow').click()
+					$('#files .conteiner').css('padding','20px');
+					$('#files .conteiner').css('width','60%')
+					$('#files .conteiner').css('top','20%');
+					$('#files .conteiner').css('left','20%');
+					$('#files .conteiner').html('<input type="text" value="'+old_name+'" class="form-control" aria-describedby="basic-addon1">');
+					$('#files .conteiner input').after('<a class="btn btn-info" old_name="'+old_name+'" b="update" file="'+file_id+'">Update</a>')
+					$('#files .conteiner a').after('<a class="btn btn-danger">Close</a>')
+				})
+				
+				$('#files .conteiner').on('click','.btn-info[b=update]',function(){
+					if(confirm('Переименовать?')){
+						var file_id=$(this).attr('file');
+						var old_name=$(this).attr('old_name');
+						var new_name=$('#files .conteiner input').val();
+						$.ajax({
+							url: "{{ url('files/update') }}",
+							data:{
+								name : new_name,
+								id : file_id
+							},
+							success: function(e){
+								$('#files a[file='+file_id+']').html(new_name)
+								
+								var url = $('#files a[file='+file_id+']').attr('href')
+								
+								var pattern=new RegExp('\\?f=[a-zа-я0-9_\/\s]*' + old_name + '[a-zа-я0-9_\/\s]*$','i');
+								
+								e="?f="+JSON.parse(e).replace(/^\//,'');
+								
+								var url2= url.replace(pattern,e)
+								
+								$('#files a[file='+file_id+']').attr('href',url2)
+								
+								$('#files .shadow').click()
+							}
+						})
+					}
+				})
 			
 				$("#files").on('click','#delete_file',function(){
 					if(confirm("Удалить?")){
@@ -216,11 +236,11 @@
 				$('#files .conteiner').css('top','20%');
 				$('#files .conteiner').css('left','20%');
 				$('#files .conteiner').html('<input type="text" class="form-control" placeholder="Folder name" aria-describedby="basic-addon1">');
-				$('#files .conteiner input').after('<a class="btn btn-info">Create</a>')
+				$('#files .conteiner input').after('<a class="btn btn-info" b="create">Create</a>')
 				$('#files .conteiner a').after('<a class="btn btn-danger">Close</a>')
 			})
 			
-			$('#files .conteiner').on('click','.btn-info',function(){
+			$('#files .conteiner').on('click','.btn-info[b=create]',function(){
 				$.ajax({
 					url: "{{ url('files/folder/create') }}",
 					data:{
