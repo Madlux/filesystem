@@ -99,7 +99,7 @@ class FilesController extends Controller
 	
 	private function hasInputFolder(){
 		if(Request::has('f')){
-			return Request::get('f');
+			return preg_replace('/^\//','',Request::get('f'));
 		}else{
 			return '';
 		}
